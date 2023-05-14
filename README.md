@@ -1,6 +1,7 @@
 # DataSecurity_Gr1_Detyra3
 
 Grupi 1: Adrian Sopi, Adriatik Krasniqi, Agnesa Jashanica, Armela Hajra 
+
 Programimi i punes se SBox-eve dhe fitimi i 16 SubKey per secilin round te Algoritmit DES
 
 Data Encryption Standard (DES) eshte block cipher 64 bitesh me 16 raunde dhe çeles me gjatesi prej 56 bitesh.
