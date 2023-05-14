@@ -34,3 +34,46 @@ PC2 = [14, 17, 11, 24, 1, 5, 3, 28,
        41, 52, 31, 37, 47, 55, 30, 40,
        51, 45, 33, 48, 44, 49, 39, 56,
        34, 53, 46, 42, 50, 36, 29, 32]
+
+
+
+
+
+'''
+    RHL1 dhe RHL2 definohen duke marre gjysmen 28 biteshe te nje inputi 56 bitesh 
+    dhe duke i rrotulluar bitat e seciles gjysme majtas per r pozita. 
+    Key schedule i DES perdor PBox ku r=1 ose r=2.
+'''
+
+# Rotate Halves Left by 1 ( RHL(1) )
+# B56 ne B56
+RHL1 = list(range(2, 29)) + [1] + list(range(30, 57)) + [29]
+
+
+# Rotate Halves Left by 2 ( RHL(2) )
+# B56 ne B56
+RHL2 = list(range(3, 29)) + [1, 2] + list(range(31, 57)) + [29, 30]
+
+# k eshte nje celes 64 bitesh ne hyrje
+# Dalja e funksionit eshte nje liste e perbere nga 16 subkey (roundkey) 48 bitesh
+def key_schedule(k):
+    x = pbox(k, PC1, 64)
+    keys = []
+    for round in range(1, 17):
+        if round in [1, 2, 9, 16]:
+            x = pbox(x, RHL1, 56)
+        else:
+            x = pbox(x, RHL2, 56)
+        keys.append(pbox(x, PC2, 56))
+    return keys
+
+
+#testimi
+celesi_hyres = 'AABB09182736CCDD'
+k = int(celesi_hyres, 16)
+keys = key_schedule(k)
+
+print('16 subkeys ne dalje te secilit round per celesin hyres ', celesi_hyres, ' jane:')
+
+for key in keys:
+    print(hex(key))
